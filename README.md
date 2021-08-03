@@ -11,5 +11,5 @@ however are much faster and easier to understand. Kalman filters, however,
 are typically more accurate (but they can be pretty similar) and can be 
 applied to a greater range of problems.
 
-Sooner or later, I'll publish this as an official Arduino library; once I've 
+Sooner or later, I'll publish this as an official Arduino library... once I've 
 done more testing and ironed out the bugs 😉.

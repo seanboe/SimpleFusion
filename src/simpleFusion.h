@@ -11,9 +11,10 @@ typedef struct {
 	int16_t z;
 } ThreeAxis;
 
-typedef enum {
-	PITCH, ROLL
-}	RotationType;
+typedef struct {
+	int16_t roll;
+	int16_t pitch;
+} FusedAngles;
 
 class sensorFusion {
 
@@ -28,7 +29,8 @@ class sensorFusion {
 		int16_t	_filterUpdateRate;		// Hertz, less than 1000
 		int16_t _gyroFavoring; 				// The amount that the gyro is favored
 
-		int16_t _angle;
+		int16_t _pitch;
+		int16_t _roll;
 
 		long long _previousTime;
 		bool _justUpdatedData;

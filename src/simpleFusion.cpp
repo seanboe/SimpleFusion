@@ -2,12 +2,11 @@
 
 sensorFusion::sensorFusion(void) {};
 
-bool sensorFusion::init(int16_t filterUpdateRate, int16_t gyroFavoring, RotationType rotationType) {
+bool sensorFusion::init(int16_t filterUpdateRate, int16_t gyroFavoring) {
 	_filterUpdateRate = filterUpdateRate;
 	_gyroFavoring = _gyroFavoring;
 	if (_gyroFavoring > 1 || _gyroFavoring < 0)
 		return false;
-	_rotationType = rotationType;
 	
 	_previousTime = millis();
 	_justUpdatedData = false;
@@ -27,32 +26,16 @@ bool sensorFusion::shouldUpdateData() {
 	return false;
 };
 
-int16_t sensorFusion::getFilteredAngle(ThreeAxis &gyroscope, ThreeAxis &accelerometer) { 
-	int16_t relevantAccelerometer = 0;			// The roll calculation requires the x acclerometer, the pitch requires the y
-	int16_t relevantGyroscope = 0;
+int16_t sensorFusion::getFilteredAngles(ThreeAxis &gyroscope, ThreeAxis &accelerometer, FusedAngles *angleOutputs) { 
 	
-	switch (_rotationType) {
-		case PITCH:
-			relevantAccelerometer = accelerometer.y;
-			relevantGyroscope = gyroscope.x;
-			break;
-		case ROLL:
-			relevantAccelerometer = accelerometer.x;
-			relevantGyroscope = gyroscope.y;
-			break;
-	}	
+	int16_t pitchFromAccel = 0;
+	int16_t rollFromAccel  = 0;
 	
-	// Get the angle based on the accelerometer readings
-	int16_t accelerometerAngle = tan(relevantAccelerometer / accelerometer.z);
+	pitchFromAccel = atan(accelerometer.x / sqrt(pow(accelerometer.y, 2) + pow(accelerometer.z, 2))) * (180 / PI);	
+	rollFromAccel = atan(accelerometer.y / sqrt(pow(accelerometer.x, 2) + pow(accelerometer.z, 2))) * (180 / PI);
 	
-	// Integrate the gyroscope angle to get the angle based on gyroscope readings
-	_angle += relevantGyroscope * _filterUpdateRate;
-	
-	// Apply the complementary filter
-	_angle = _gyroFavoring * _angle + accelerometerAngle * (1 - _gyroFavoring);
-	
-	return _angle;
+	// Complimentary Filter
+	_pitch = ()
 	
 };
-
 

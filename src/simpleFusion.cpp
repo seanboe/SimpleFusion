@@ -1,41 +1,63 @@
 #include "simpleFusion.h"
 
-sensorFusion::sensorFusion(void) {};
+SimpleFusion::SimpleFusion(void) {};
 
-bool sensorFusion::init(int16_t filterUpdateRate, int16_t gyroFavoring) {
+bool SimpleFusion::init(int16_t filterUpdateRate, int16_t pitchGyroFavoring, int16_t rollGyroFavoring) {
 	_filterUpdateRate = filterUpdateRate;
-	_gyroFavoring = _gyroFavoring;
-	if (_gyroFavoring > 1 || _gyroFavoring < 0)
+	_pitchGyroFavoring = pitchGyroFavoring;
+	_rollGyroFavoring = rollGyroFavoring;
+	
+	if (_pitchGyroFavoring > 1 || _pitchGyroFavoring < 0)
+		return false;
+	if (_rollGyroFavoring > 1 || _rollGyroFavoring < 0)
 		return false;
 	
-	_previousTime = millis();
+	_previousTime = micros();
 	_justUpdatedData = false;
+	
+	_pitch = 0;
+	_roll = 0;
 	
 	return true;
 };
 
 
-bool sensorFusion::shouldUpdateData() {
-	int16_t dt = (millis() - _previousTime);
-	if (dt % (1000 / _filterUpdateRate) < DATA_UPDATE_POLL_TOLERANCE && _justUpdatedData == false) {
+bool SimpleFusion::shouldUpdateData() {
+	long dt = (micros() - _previousTime);
+	
+	if ((dt % (1000000 / _filterUpdateRate) <= DATA_UPDATE_POLL_TOLERANCE) && (_justUpdatedData == false)) {
 		_justUpdatedData = true;
 		return true;
 	}
-	else if (!(dt % (1000 / _filterUpdateRate) < DATA_UPDATE_POLL_TOLERANCE))
+	else if ((dt % (1000000 / _filterUpdateRate) > DATA_UPDATE_POLL_TOLERANCE))
 		_justUpdatedData = false;
+		
 	return false;
 };
 
-int16_t sensorFusion::getFilteredAngles(ThreeAxis &gyroscope, ThreeAxis &accelerometer, FusedAngles *angleOutputs) { 
+
+void SimpleFusion::getFilteredAngles(ThreeAxis &accelerometer, ThreeAxis &gyroscope, FusedAngles *angleOutputs, AngleUnit angleUnit) { 
 	
-	int16_t pitchFromAccel = 0;
-	int16_t rollFromAccel  = 0;
+	float pitchFromAccel = 0;
+	float rollFromAccel  = 0;
 	
-	pitchFromAccel = atan(accelerometer.x / sqrt(pow(accelerometer.y, 2) + pow(accelerometer.z, 2))) * (180 / PI);	
-	rollFromAccel = atan(accelerometer.y / sqrt(pow(accelerometer.x, 2) + pow(accelerometer.z, 2))) * (180 / PI);
+	pitchFromAccel = atan(accelerometer.x / sqrt(pow(accelerometer.y, 2) + pow(accelerometer.z, 2))) * (float)(180 / PI);	
+// 	rollFromAccel = atan(accelerometer.y / sqrt(pow(accelerometer.x, 2) + pow(accelerometer.z, 2))) * (180 / PI);
+	rollFromAccel = atan2(-accelerometer.y , accelerometer.z) * (float)(180 / PI);
 	
 	// Complimentary Filter
-	_pitch = ()
+	_pitch = (_pitchGyroFavoring) * (_pitch + (gyroscope.y * (1.00 / _filterUpdateRate))) + (1 - _pitchGyroFavoring) * (pitchFromAccel);
+	_roll = (_rollGyroFavoring) * (_roll + (gyroscope.x * (1.00 / _filterUpdateRate))) + (1 - _rollGyroFavoring) * (rollFromAccel);
 	
+	switch (angleUnit) {
+		case UNIT_DEGREES:
+			angleOutputs->pitch = _pitch;
+			angleOutputs->roll = _roll;
+			break;
+		case UNIT_RADIANS:
+			angleOutputs->pitch = _pitch * (PI / 180);      
+			angleOutputs->roll 	= _roll  * (PI / 180);
+			break;
+	}
 };
 

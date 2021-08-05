@@ -3,36 +3,42 @@
 
 #include <Arduino.h>
 
-#define DATA_UPDATE_POLL_TOLERANCE	5			//milliseconds
+#define DATA_UPDATE_POLL_TOLERANCE	50			//microseconds
 
 typedef struct {
-	int16_t x;
-	int16_t y;
-	int16_t z;
+	float x;
+	float y;
+	float z;
 } ThreeAxis;
 
 typedef struct {
-	int16_t roll;
-	int16_t pitch;
+	float roll;
+	float pitch;
 } FusedAngles;
 
-class sensorFusion {
+typedef enum {
+	UNIT_DEGREES, UNIT_RADIANS
+}	AngleUnit;
+
+class SimpleFusion {
 
 	public:
-		sensorFusion();
-		bool init(int16_t filterUpdateRate, int16_t gyroFavoring, RotationType rotationType);
+		SimpleFusion();
+		bool init(int16_t filterUpdateRate, int16_t pitchGyroFavoring, int16_t rollGyroFavoring);
+		void getFilteredAngles(ThreeAxis &accelerometer, ThreeAxis &gyroscope, FusedAngles *angleOutputs, AngleUnit angleUnit);
+
 		bool shouldUpdateData();
-		int16_t getFilteredAngle(ThreeAxis &gyroscope, ThreeAxis &accelerometer);
 		
 	private:
-		RotationType _rotationType;
-		int16_t	_filterUpdateRate;		// Hertz, less than 1000
-		int16_t _gyroFavoring; 				// The amount that the gyro is favored
+		
+		int16_t	_filterUpdateRate;		// Hertz, less than 1000000
+		float _pitchGyroFavoring; 	// The amount that the gyro is favored (alpha)
+		float _rollGyroFavoring;				
 
-		int16_t _pitch;
-		int16_t _roll;
+		float _pitch;
+		float _roll;
 
-		long long _previousTime;
+		long _previousTime;
 		bool _justUpdatedData;
 };
 

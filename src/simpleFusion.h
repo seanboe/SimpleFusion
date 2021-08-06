@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#define DATA_UPDATE_POLL_TOLERANCE	50			//microseconds
+#define DATA_UPDATE_POLL_TOLERANCE	50			// The leniency of shouldUpdateData(), in microseconds
 
 typedef struct {
 	float x;

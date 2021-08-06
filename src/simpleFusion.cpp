@@ -57,22 +57,23 @@ void SimpleFusion::getFilteredAngles(ThreeAxis &accelerometer, ThreeAxis &gyrosc
 	float pitchFromAccel = 0;
 	float rollFromAccel  = 0;
 	
-	pitchFromAccel = atan(-accelerometer.x / sqrt(pow(accelerometer.y, 2) + pow(accelerometer.z, 2))) * (float)(180 / PI);	
-	rollFromAccel = atan(accelerometer.y / sqrt(pow(accelerometer.x, 2) + pow(accelerometer.z, 2))) * (float)(180 / PI);
+	pitchFromAccel = atan(-accelerometer.x / sqrt(pow(accelerometer.y, 2) + pow(accelerometer.z, 2)));	
+// 	rollFromAccel = atan(accelerometer.y / sqrt(pow(accelerometer.x, 2) + pow(accelerometer.z, 2)));
+	rollFromAccel = atan2(accelerometer.y, accelerometer.z);
 	
 	// Complimentary Filter
-	_pitch = (_pitchGyroFavoring) * (_pitch + (gyroscope.y * (180 / PI) * (1.00 / _filterUpdateRate))) + (1.00 - _pitchGyroFavoring) * (pitchFromAccel);
-	_roll = (_rollGyroFavoring) * (_roll + (gyroscope.x * (180 / PI) * (1.00 / _filterUpdateRate))) + (1.00 - _rollGyroFavoring) * (rollFromAccel);
+	_pitch = (_pitchGyroFavoring) * (_pitch + (gyroscope.y * (1.00 / _filterUpdateRate))) + (1.00 - _pitchGyroFavoring) * (pitchFromAccel);
+	_roll = (_rollGyroFavoring) * (_roll + (gyroscope.x * (1.00 / _filterUpdateRate))) + (1.00 - _rollGyroFavoring) * (rollFromAccel);
 
 	
 	switch (angleUnit) {
 		case UNIT_DEGREES:
-			angleOutputs->pitch = _pitch;
-			angleOutputs->roll = _roll;
+			angleOutputs->pitch = _pitch * (180 / PI);
+			angleOutputs->roll = _roll * (180 / PI);
 			break;
 		case UNIT_RADIANS:
-			angleOutputs->pitch = _pitch * (PI / 180);      
-			angleOutputs->roll 	= _roll  * (PI / 180);
+			angleOutputs->pitch = _pitch;      
+			angleOutputs->roll 	= _roll;
 			break;
 	}
 

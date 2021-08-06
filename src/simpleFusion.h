@@ -24,7 +24,7 @@ class SimpleFusion {
 
 	public:
 		SimpleFusion();
-		bool init(int16_t filterUpdateRate, int16_t pitchGyroFavoring, int16_t rollGyroFavoring);
+		bool init(int16_t filterUpdateRate, float pitchGyroFavoring, float rollGyroFavoring);
 		void getFilteredAngles(ThreeAxis &accelerometer, ThreeAxis &gyroscope, FusedAngles *angleOutputs, AngleUnit angleUnit);
 
 		bool shouldUpdateData();

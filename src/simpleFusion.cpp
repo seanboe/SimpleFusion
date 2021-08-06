@@ -2,7 +2,7 @@
 
 SimpleFusion::SimpleFusion(void) {};
 
-bool SimpleFusion::init(int16_t filterUpdateRate, int16_t pitchGyroFavoring, int16_t rollGyroFavoring) {
+bool SimpleFusion::init(int16_t filterUpdateRate, float pitchGyroFavoring, float rollGyroFavoring) {
 	_filterUpdateRate = filterUpdateRate;
 	_pitchGyroFavoring = pitchGyroFavoring;
 	_rollGyroFavoring = rollGyroFavoring;
@@ -41,13 +41,13 @@ void SimpleFusion::getFilteredAngles(ThreeAxis &accelerometer, ThreeAxis &gyrosc
 	float pitchFromAccel = 0;
 	float rollFromAccel  = 0;
 	
-	pitchFromAccel = atan(accelerometer.x / sqrt(pow(accelerometer.y, 2) + pow(accelerometer.z, 2))) * (float)(180 / PI);	
-// 	rollFromAccel = atan(accelerometer.y / sqrt(pow(accelerometer.x, 2) + pow(accelerometer.z, 2))) * (180 / PI);
-	rollFromAccel = atan2(-accelerometer.y , accelerometer.z) * (float)(180 / PI);
+	pitchFromAccel = atan(-accelerometer.x / sqrt(pow(accelerometer.y, 2) + pow(accelerometer.z, 2))) * (float)(180 / PI);	
+	rollFromAccel = atan(accelerometer.y / sqrt(pow(accelerometer.x, 2) + pow(accelerometer.z, 2))) * (float)(180 / PI);
 	
 	// Complimentary Filter
-	_pitch = (_pitchGyroFavoring) * (_pitch + (gyroscope.y * (1.00 / _filterUpdateRate))) + (1 - _pitchGyroFavoring) * (pitchFromAccel);
-	_roll = (_rollGyroFavoring) * (_roll + (gyroscope.x * (1.00 / _filterUpdateRate))) + (1 - _rollGyroFavoring) * (rollFromAccel);
+	_pitch = (_pitchGyroFavoring) * (_pitch + (gyroscope.y * (180 / PI) * (1.00 / _filterUpdateRate))) + (1.00 - _pitchGyroFavoring) * (pitchFromAccel);
+	_roll = (_rollGyroFavoring) * (_roll + (gyroscope.x * (180 / PI) * (1.00 / _filterUpdateRate))) + (1.00 - _rollGyroFavoring) * (rollFromAccel);
+
 	
 	switch (angleUnit) {
 		case UNIT_DEGREES:
@@ -59,5 +59,6 @@ void SimpleFusion::getFilteredAngles(ThreeAxis &accelerometer, ThreeAxis &gyrosc
 			angleOutputs->roll 	= _roll  * (PI / 180);
 			break;
 	}
+
 };
 

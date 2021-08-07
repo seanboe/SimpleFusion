@@ -12,7 +12,7 @@ A library that fuses accelerometer and gyroscope readings quickly and easily wit
 <br>	
 <a href="https://github.com/seanboe/SimpleFusion"> <img src="https://img.shields.io/badge/License-MIT-informational.svg"> </a>
 <a href="https://github.com/seanboe/SimpleFusion"> <img src="https://img.shields.io/badge/Maintained%3F-yes-orange.svg"> </a>	
-  <a href="https://github.com/seanboe/SimpleFusion"><img src="https://img.shields.io/github/v/release/seanboe/SimpleFusion?color=bright-green&style=plastic"></a>
+  <a href="https://github.com/seanboe/SimpleFusion"><img src="https://img.shields.io/github/v/release/seanboe/SimpleFusion?color=bright-green"></a>
 </p>
 
 ## Overview

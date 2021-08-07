@@ -7,12 +7,11 @@
 </h1>
 
 <p align="center">
-  A library that fuses accelerometer and gyroscope readings quickly and easily with a complementary filter.
-	
+A library that fuses accelerometer and gyroscope readings quickly and easily with a complementary filter.
 <br>
-	
-	<a href="https://github.com/seanboe/SimpleFusion"> <img src="https://img.shields.io/badge/License-MIT-green.svg"> </a>
-	<a href="https://github.com/seanboe/SimpleFusion"> <img src="https://img.shields.io/badge/Maintained%3F-yes-orange.svg"> </a>
+<br>	
+<a href="https://github.com/seanboe/SimpleFusion"> <img src="https://img.shields.io/badge/License-MIT-green.svg"> </a>
+<a href="https://github.com/seanboe/SimpleFusion"> <img src="https://img.shields.io/badge/Maintained%3F-yes-orange.svg"> </a>	
 </p>
 
 ## Overview

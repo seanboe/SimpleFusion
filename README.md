@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/seanboe/QuadrupedProject"><img src="extras/images/complementary_filter.png" alt="complementary_filter" width="200"></a>
+  <a href="https://github.com/seanboe/QuadrupedProject"><img src="extras/images/complementary_filter.png" alt="complementary_filter" width="600"></a>
   <br>
   SimpleFusion
   <br>
@@ -24,7 +24,7 @@ Here's a comparison of different high-speed methods for estimating pitch and rol
 
 <p align = "center">
 <br>
-<img src="extras/images/filter_comparisons.jpg" atl="filter_comparisons" width = "400">
+<img src="extras/images/filter_comparisons.jpg" atl="filter_comparisons" width = "600">
 <br>
 </p>
 

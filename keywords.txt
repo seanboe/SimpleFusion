@@ -1,0 +1,32 @@
+#######################################
+# Syntax Coloring Map SimpleFusion
+#######################################
+
+#######################################
+# Datatypes	(KEYWORD1)
+#######################################
+
+SimpleFusion	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+init	KEYWORD2
+getFilteredAngles	KEYWORD2
+shouldUpdateData	KEYWORD2
+
+#######################################
+# Structures (KEYWORD3)
+#######################################
+
+ThreeAxis	KEYWORD3
+FusedAngles	KEYWORD3
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+DATA_UPDATE_POLL_TOLERANCE	LITERAL1
+UNIT_DEGREES	LITERAL1
+UNIT_RADIANS	LITERAL1

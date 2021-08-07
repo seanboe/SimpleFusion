@@ -1,17 +1,35 @@
-# SimpleFusion
+<h1 align="center">
+  <br>
+  <a href="https://github.com/seanboe/QuadrupedProject"><img src="extras/images/complementary_filter.png" alt="complementary_filter" width="200"></a>
+  <br>
+  SimpleFusion
+  <br>
+</h1>
 
-A simple library that applies a complementary filter to accelerometer and 
-gyroscope readings (6-dof IMU) in order to achieve an accurate estimation 
-of the pitch and roll of a gyroscope.
+<p align="center"> 
+	<br>
+  SimpleFusion
+	<br>
+  A library that fuses accelerometer and gyroscope readings quickly and easily with a complementary filter.
+	<a href="https://github.com/seanboe/SimpleFusion"> <img src="https://img.shields.io/badge/License-MIT-green.svg"> </a>
+	<a href="https://github.com/seanboe/SimpleFusion"> <img src="https://img.shields.io/badge/Maintained%3F-yes-orange.svg"> </a>
+</p>
 
-### Be Aware:
-The library expects accelerometer readings in m/second^2 and gyroscope readings in radians/second. It can output an angle in radians or degrees.
+## Overview
+This library combines accelerometer (in meters / second &sup2;) and gyroscope (in radians / second) data to output the IMU's rotation (Euler angles). It is accurate
+up to &plusmn; 90 degrees. 
 
-### Benefits
+## Benefits
+Here's a comparison of different high-speed methods for estimating pitch and roll.
 
-Complementary filters remove the drift from gyroscopes by considering accelerometer readings, which don't drift (but are very noisy and subject to inaccuracy).
+<p align = "center">
+<br>
+<img src="extras/images/filter_comparisons.jpg" atl="filter_comparisons" width = "400">
+<br>
+</p>
 
+The complementary filter returns smooth readings despite non-zero acceleration.
 
+## License
 
-Sooner or later, I'll publish this as an official Arduino library... once I've 
-done more testing and ironed out the bugs 😉.
+<a href="LICENSE">MIT<a>

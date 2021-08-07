@@ -48,8 +48,8 @@ bool SimpleFusion::shouldUpdateData() {
 
 /*!
  *    @brief Calculates rotation angles based on gyroscope and accelerometer readings
- *    @param accelerometer The accelerometer readings from the IMU as ThreeAxis struct variables
- *    @param gyroscope The gyroscope readings from the IMU as ThreeAxis struct variables
+ *    @param accelerometer The accelerometer readings from the IMU as ThreeAxis struct variables (Units are m/s^2)
+ *    @param gyroscope The gyroscope readings from the IMU as ThreeAxis struct variables (Units are radians/second)
  * 		@param angleOutputs The address of a FusedAngles struct variable for holding angular outputs
 */
 void SimpleFusion::getFilteredAngles(ThreeAxis &accelerometer, ThreeAxis &gyroscope, FusedAngles *angleOutputs, AngleUnit angleUnit) { 
@@ -58,8 +58,8 @@ void SimpleFusion::getFilteredAngles(ThreeAxis &accelerometer, ThreeAxis &gyrosc
 	float rollFromAccel  = 0;
 	
 	pitchFromAccel = atan(-accelerometer.x / sqrt(pow(accelerometer.y, 2) + pow(accelerometer.z, 2)));	
-// 	rollFromAccel = atan(accelerometer.y / sqrt(pow(accelerometer.x, 2) + pow(accelerometer.z, 2)));
-	rollFromAccel = atan2(accelerometer.y, accelerometer.z);
+	rollFromAccel = atan(accelerometer.y / sqrt(pow(accelerometer.x, 2) + pow(accelerometer.z, 2)));
+	// rollFromAccel = atan2(accelerometer.y, accelerometer.z);
 	
 	// Complimentary Filter
 	_pitch = (_pitchGyroFavoring) * (_pitch + (gyroscope.y * (1.00 / _filterUpdateRate))) + (1.00 - _pitchGyroFavoring) * (pitchFromAccel);

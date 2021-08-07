@@ -1,12 +1,15 @@
 // ******************************************************
 // An example of the SimpleFusion library that combines
 // accelerometer and gyroscope data quickly and easily.
+//
 // This example uses the mpu6050 6-dof IMU and the 
 // Adafruit library for it.
+//
 // Created in 2021 by Sean Boerhout under the MIT License
 // ******************************************************
 
-#include "src/simpleFusion.h"     // If you've used the "include library" tool, you'll need to use '<[library]>'
+
+#include <simpleFusion.h>     // If you've used the "include library" tool, you'll need to use '<[library]>'
 
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
@@ -39,12 +42,12 @@ void loop() {
     sensors_event_t a, g, temp;
     mpu.getEvent(&a, &g, &temp);
     
-    ThreeAxis accelerometer;
+    ThreeAxis accelerometer;                  // Please verify that the units are in meters / second ^ 2
     accelerometer.x = a.acceleration.x;
     accelerometer.y = a.acceleration.y;
     accelerometer.z = a.acceleration.z;
   
-    ThreeAxis gyroscope;
+    ThreeAxis gyroscope;                      // Please verify that the units are in raidans / second
     gyroscope.x = g.gyro.x;
     gyroscope.y = g.gyro.y;
     gyroscope.z = g.gyro.z;

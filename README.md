@@ -10,6 +10,7 @@
 <br/>
   A library that fuses accelerometer and gyroscope readings quickly and easily with a complementary filter.
 <br/>
+	<br>
 	<a href="https://github.com/seanboe/SimpleFusion"> <img src="https://img.shields.io/badge/License-MIT-green.svg"> </a>
 	<a href="https://github.com/seanboe/SimpleFusion"> <img src="https://img.shields.io/badge/Maintained%3F-yes-orange.svg"> </a>
 <br/>

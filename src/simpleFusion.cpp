@@ -20,7 +20,7 @@ bool SimpleFusion::init(int16_t filterUpdateRate, float pitchGyroFavoring, float
 	if (_rollGyroFavoring > 1 || _rollGyroFavoring < 0)
 		return false;
 	
-	_previousTime = micros();
+	_previousTime = millis();
 	_justUpdatedData = false;
 	
 	_pitch = 0;
@@ -34,13 +34,13 @@ bool SimpleFusion::init(int16_t filterUpdateRate, float pitchGyroFavoring, float
  *		@returns true if it is time to update the library, false if it isn't
 */
 bool SimpleFusion::shouldUpdateData() {
-	long dt = (micros() - _previousTime);
+	long dt = (millis() - _previousTime);
 	
-	if ((dt % (1000000 / _filterUpdateRate) <= DATA_UPDATE_POLL_TOLERANCE) && (_justUpdatedData == false)) {
+	if ((dt % (1000 / _filterUpdateRate) <= DATA_UPDATE_POLL_TOLERANCE) && (_justUpdatedData == false)) {
 		_justUpdatedData = true;
 		return true;
 	}
-	else if ((dt % (1000000 / _filterUpdateRate) > DATA_UPDATE_POLL_TOLERANCE))
+	else if ((dt % (1000 / _filterUpdateRate) > DATA_UPDATE_POLL_TOLERANCE))
 		_justUpdatedData = false;
 		
 	return false;
@@ -57,8 +57,8 @@ void SimpleFusion::getFilteredAngles(ThreeAxis &accelerometer, ThreeAxis &gyrosc
 	float pitchFromAccel = 0;
 	float rollFromAccel  = 0;
 	
-	pitchFromAccel = atan(-accelerometer.x / sqrt(pow(accelerometer.y, 2) + pow(accelerometer.z, 2)));	
-	rollFromAccel = atan(accelerometer.y / sqrt(pow(accelerometer.x, 2) + pow(accelerometer.z, 2)));
+	pitchFromAccel = atan2(-accelerometer.x , sqrt(pow(accelerometer.y, 2) + pow(accelerometer.z, 2)));	
+	rollFromAccel = atan2(accelerometer.y , sqrt(pow(accelerometer.x, 2) + pow(accelerometer.z, 2)));
 	// rollFromAccel = atan2(accelerometer.y, accelerometer.z);
 	
 	// Complimentary Filter

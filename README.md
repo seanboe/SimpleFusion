@@ -19,6 +19,8 @@ A library that fuses accelerometer and gyroscope readings quickly and easily wit
 This library combines accelerometer (in meters / second &sup2;) and gyroscope (in radians / second) data to output the IMU's rotation (Euler angles). It is accurate
 up to &plusmn; 90 degrees. 
 
+Note the the lxibrary defines pitch to be a rotation about the y-axis and roll to be a rotation about the x-axis.
+
 ## Benefits
 Here's a comparison of different high-speed methods for estimating pitch and roll.
 
